@@ -42,6 +42,10 @@
 }
 
 :root {
+    --color-primary: oklch(0.152 0.065 306.6);
+    --color-secondary-bg: oklch(0.695 0.201 38.1);
+    --color-secondary-fg: oklch(0.412 0.157 295.6);
+    --color-accent: oklch(0.978 0.03 117.4);
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
@@ -109,6 +113,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
+
 
 @layer base {
   * {
