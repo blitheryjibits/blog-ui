@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 export default function Hero() {
   return (
         <section className="py-20 px-6 text-center bg-[url(/images/blog-hero-image.jpg)] bg-cover bg-center bg-fixed bg-black/50 bg-blend-multiply">
@@ -11,13 +11,7 @@ export default function Hero() {
                 This blog is my code sandbox
             </p>
             {/* raw insights,  */}
-            <p className="text-(--color-accent)">
-                expect
-            </p>
-            {/* <div className="mt-6 flex justify-center gap-4">
-            <Button>Sign up</Button>
-            <Button variant="outline">View Posts</Button>
-            </div> */}
+           
         </section>
     );
 }   
