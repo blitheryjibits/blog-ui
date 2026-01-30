@@ -1,12 +1,12 @@
 // design a grid layout with a large card on left and two smaller stacked cards on the right
 import FeatureBlogCard from "../ui/featureBlogCard";
 import SmallBlogCard from "../ui/smallBlogCard";
-import type { BlogCardProps } from "../ui/smallBlogCard"; 
+import type { Post } from "@/api/types";
 
 interface FeatureGridProps {
-    blog1: BlogCardProps
-    blog2: BlogCardProps
-    blog3: BlogCardProps
+    blog1: Post
+    blog2: Post
+    blog3: Post
     featureBlog: 1 | 2 | 3   // flag to indicate which blog is the main feature
 }
 
@@ -25,22 +25,24 @@ export default function FeatureGrid({ blog1, blog2, blog3, featureBlog }: Featur
       {/* Left: Feature blog card */}
       <div className="col-span-1 row-span-2">
         <FeatureBlogCard
+          id={feature.id}
           title={feature.title}
           excerpt={feature.excerpt}
-          imageUrl={feature.imageUrl}
-          imageAlt={feature.imageAlt || "Feature blog image"}
+          imgUrl={feature.imgUrl}
+          imgAlt={feature.imgAlt || "Feature blog image"}
         />
       </div>
 
       {/* Right: Two stacked small blog cards */}
       <div className="grid grid-rows-2 col-span-1 gap-4">
-        {smallBlogs.map((blog, idx) => (
+        {smallBlogs.map((blog) => (
           <SmallBlogCard
-            key={idx}
+            key={blog.id}
+            id={blog.id}
             title={blog.title}
             excerpt={blog.excerpt}
-            imageUrl={blog.imageUrl}
-            imageAlt={blog.imageAlt || "Small blog image"}
+            imgUrl={blog.imgUrl}
+            imgAlt={blog.imgAlt || "Small blog image"}
           />
         ))}
       </div>
