@@ -1,0 +1,25 @@
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import type { CarouselCardProps } from "@/api/types";
+
+
+export default function CarouselCard({ title, excerpt, imgUrl, imgAlt = "Blog post image", isActive = false, isAdjacent = false }: CarouselCardProps) {
+
+    return (
+         <Card className="h-full">
+             <CardHeader className={` font-bold transition-transform duration-500 ease-in-out transform-gpu
+                        ${isActive ? "opacity-0" : ""} : ${isAdjacent ? "opacity-60" : "opacity-80"}`}>{title}</CardHeader>
+             <CardContent>
+                 <img
+                     src={imgUrl}
+                     alt={imgAlt || "Blog post image"}
+                     className={`rounded-md border w-full h-40 object-cover
+                        transistion-transform duration-500 ease-in-out transform-gpu
+                        ${isActive ? "scale-110 opacity-0" : ""} : ${isAdjacent ? "scale-90 opacity-60" : "scale-75 opacity-80"}`}
+                 />
+                 <p className="mt-2 text-sm text-muted-foreground">
+                     {excerpt}
+                 </p>
+             </CardContent>
+         </Card>
+     );
+}
