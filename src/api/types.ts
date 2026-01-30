@@ -37,3 +37,8 @@ export type SignInDto = {
   email: string;
   password: string;
 };
+
+export interface ApiError extends Error {
+  status?: number;
+}
+
