@@ -8,15 +8,17 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel"
-import CarouselCard from "@/components/ui/caouselCard"
-import type { BlogCardProps } from "@/components/ui/caouselCard"
+import CarouselCard from "@/components/ui/carouselCard"
+import { mapPostToCarouselCard } from "@/assets/carouselCardMapper"
+import type { Post } from "@/api/types";
 
-interface BlogCarouselProps {
-    posts: BlogCardProps[];
-}
-export function BlogPostCarousel( { posts }: BlogCarouselProps) {
+interface BlogPostCarouselProps { posts: Post[]; }
+
+export function BlogPostCarousel( { posts }: BlogPostCarouselProps) {
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
+
+  const mappedPosts = posts.map(mapPostToCarouselCard);
 
   React.useEffect(() => {
     if (!api) return
@@ -32,7 +34,7 @@ export function BlogPostCarousel( { posts }: BlogCarouselProps) {
         opts={{ align: "center", loop: true }}
         className="max-w-2xl mx-auto px-4">
       <CarouselContent>
-        {posts.map((item, index) => {
+        {mappedPosts.map((item, index) => {
           // distance from center
           const distance = Math.abs(current - index)
           return (
