@@ -6,7 +6,6 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
-      {/* Add other routes here */}
     </Routes>
   );
 }
