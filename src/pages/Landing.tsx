@@ -5,8 +5,42 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/layout/Hero";
 import { BlogPostCarousel } from "@/components/ui/blogPostCarousel";
+import BlockGrid from "@/components/layout/BlockGrid";
+import { apiFetch } from "@/api/client";
+import type { Post } from "@/api/types";
+import { useEffect, useState } from "react";
+import Spinner from "@/components/ui/spinner";
 
 export default function Landing() {
+  const [posts, setPosts] = useState<Post[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const data = await apiFetch<Post[]>('/api/posts/');
+        setPosts(data);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      } finally {
+        setLoading(false);
+      } 
+    }
+    fetchPosts();
+  }, []);
+
+  useEffect(() => {
+    posts?.map(post => {
+      post.imgUrl = "/images/technology.jpeg" // temporary placeholder
+      post.excerpt = post.content?.substring(0, 100) + "..." || "No excerpt available.";
+      return post;
+    })
+  if (posts !== null) {
+    console.log("Fetched posts:", posts);
+  }
+}, [posts]);
+ 
+
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       <Header />
@@ -14,24 +48,29 @@ export default function Landing() {
       <main className="flex-1">
         <Hero />
         
-
-        {/* Featured Posts */}
-        
+        {loading ? (
+          <Spinner />
+        ) : ( 
+        // Featured Posts
+        <div>
         <section className="py-12 px-4 max-w-6xl mx-auto">
           <h2 className="text-2xl font-semibold mb-6">Featured Posts</h2>
-          <FeatureGrid
-        // Placeholder blog data
-          blog1={blogPosts.blog1}
-          blog2={blogPosts.blog2}
-          blog3={blogPosts.blog3}
-          featureBlog={1}
-          // End placeholder data
-        />
+          { posts && <FeatureGrid
+            blog1={posts[0]}
+            blog2={posts[1]}
+            blog3={posts[2]}
+            featureBlog={1}
+            /> 
+          }
         </section>
 
         <section className="py-12 px-4 max-w-6xl mx-auto">
           {/* Carousel */}
-          <BlogPostCarousel posts={[blogPosts.blog1, blogPosts.blog2, blogPosts.blog3, blogPosts.blog1, blogPosts.blog2, blogPosts.blog3]} />
+          {posts && <BlogPostCarousel posts={posts} />}
+        </section>
+
+        <section className="py-12 px-4 max-w-6xl mx-auto">
+          {posts && <BlockGrid posts={posts} /> }
         </section>
 
         {/* Newsletter Signup */}
@@ -47,31 +86,35 @@ export default function Landing() {
             </div>
           </div>
         </section>
+        </div>
+        )}
       </main>
-
       <Footer />
     </div>
   );
 }
 
 
-const blogPosts = {
-  blog1: {
-    title: "Blog Post 1",
-    excerpt: "This is a short excerpt from blog post 1.",
-    imageUrl: "/images/technology.jpeg",
-    imageAlt: "Blog Post 1 Image",
-  },
-  blog2: {
-    title: "Blog Post 2",
-    excerpt: "This is a short excerpt from blog post 2.",
-    imageUrl: "/images/technology.jpeg",
-    imageAlt: "Blog Post 2 Image",
-  },
-  blog3: {
-    title: "Blog Post 3",
-    excerpt: "This is a short excerpt from blog post 3.",
-    imageUrl: "/images/technology.jpeg",
-    imageAlt: "Blog Post 3 Image",
-  },
-}
+// const blogPosts = {
+//   blog1: {
+//     id: '1',
+//     title: "Blog Post 1",
+//     excerpt: "This is a short excerpt from blog post 1.",
+//     imgUrl: "/images/technology.jpeg",
+//     imgAlt: "Blog Post 1 Image",
+//   },
+//   blog2: {
+//     id: '2',
+//     title: "Blog Post 2",
+//     excerpt: "This is a short excerpt from blog post 2.",
+//     imgUrl: "/images/technology.jpeg",
+//     imgAlt: "Blog Post 2 Image",
+//   },
+//   blog3: {
+//     id: '3',
+//     title: "Blog Post 3",
+//     excerpt: "This is a short excerpt from blog post 3.",
+//     imgUrl: "/images/technology.jpeg",
+//     imgAlt: "Blog Post 3 Image",
+//   },
+// }
