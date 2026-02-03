@@ -1,4 +1,3 @@
-// src/api/endpoints/types.ts
 
 export type Post = {
   id: string;
@@ -11,7 +10,7 @@ export type Post = {
   body?: string | null;
   publishedAt?: string | null;
   authorId?: string | null;
-  // add other fields you use from the API
+  // add other fields you use from API
 };
 
 // Used for carousel cards
@@ -30,7 +29,7 @@ export type User = {
   id: string;
   email: string;
   name?: string | null;
-  // other user fields returned by your API
+  // other user fields returned by API
 };
 
 export type SignInDto = {
@@ -38,6 +37,7 @@ export type SignInDto = {
   password: string;
 };
 
+// Allows error type to contain status
 export interface ApiError extends Error {
   status?: number;
 }
