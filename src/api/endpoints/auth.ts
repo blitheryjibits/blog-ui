@@ -4,7 +4,14 @@ import type { SignInDto, User, ApiError } from '@/api/types';
 
 const ROOT = '/api/auth';
 
-function isApiError(err: unknown): err is ApiError { return typeof err === "object" && err !== null && "status" in err; }
+// TODO
+// - check paths and create proper routes or reassign to existing
+// - /api/auth/* means the auth router and controller require additional functions.
+
+// Checks for a status property in object and returns an ApiError
+function isApiError(err: unknown): err is ApiError { 
+  return typeof err === "object" && err !== null && "status" in err; 
+}
 
 export const authApi = {
   // cookie-based login: server sets HttpOnly cookie(s)
@@ -20,7 +27,7 @@ export const authApi = {
   },
 
   me: async (): Promise<User | null> => {
-    // returns 200 + user when authenticated, 401 when not
+    // returns 200 + User when authenticated, 401 when not
     try {
       return await apiFetch<User>(`${ROOT}/me`);
     } catch (err) {
