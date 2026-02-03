@@ -1,8 +1,5 @@
-// src/api/client.ts
-// Configured fetch wrapper for cookie-based auth (credentials: 'include')
-
-const API_URL = import.meta.env.VITE_API_URL || 'https://blog-api-ddfj.onrender.com'; 
 import { getToken } from './tokenStore';
+const API_URL = import.meta.env.VITE_API_URL || 'https://blog-api-ddfj.onrender.com'; 
 
 
 export class ApiError extends Error {
@@ -38,7 +35,6 @@ export async function apiFetch<T = unknown>(path: string, opts: RequestInit = {}
     ...(opts.headers || {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
-  console.log('API Fetch Headers:', headers);
 
   const res = await fetch(`${API_URL}${path}`, {
     credentials: 'omit', // omit cookies when using header flow
