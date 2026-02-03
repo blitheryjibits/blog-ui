@@ -1,6 +1,5 @@
-// src/api/tokenStore.ts
 let inMemoryToken: string | null = null;
-const STORAGE_KEY = 'blog_access_token';
+const STORAGE_KEY = import.meta.env.STORAGE_KEY || 'blog_access_token';
 
 export function setToken(token: string, persist = false) {
   inMemoryToken = token;
